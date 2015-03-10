@@ -1,0 +1,8 @@
+# Common IDEs
+/.idea/
+
+# build Symfony - for tests
+/build/coverage.html
+/build/logs/
+/build/tmp/*
+!/build/tmp/.gitkeep

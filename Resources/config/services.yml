@@ -1,0 +1,14 @@
+parameters:
+  bs.location.class.entity.outward: BespokeSupport\LocationBundle\Entity\PostcodeOutward
+  bs.location.class.entity.area: BespokeSupport\LocationBundle\Entity\PostcodeArea
+  bs.location.class.service: BespokeSupport\LocationBundle\Entity\PostcodeArea
+
+services:
+
+  bs.location.postcode:
+    class: BespokeSupport\LocationBundle\Service\PostcodeService
+    arguments:
+      - @doctrine.orm.entity_manager
+      - %bs.location.class.entity.outward%
+    tags:
+      - { name: bs.location.postcode }
