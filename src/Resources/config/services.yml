@@ -7,8 +7,9 @@ services:
 
   bs.location.postcode:
     class: BespokeSupport\LocationBundle\Service\PostcodeService
-    arguments:
-      - @doctrine.orm.entity_manager
-      - %bs.location.class.entity.outward%
     tags:
       - { name: bs.location.postcode }
+    arguments:
+      - @doctrine.dbal.location_connection
+      - @doctrine.orm.entity_manager
+      - %bs.location.class.entity.outward%

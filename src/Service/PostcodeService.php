@@ -2,6 +2,8 @@
 
 namespace BespokeSupport\LocationBundle\Service;
 
+use BespokeSupport\Location\Postcode;
+use Doctrine\DBAL\Driver\Connection;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -19,6 +21,10 @@ use Doctrine\ORM\EntityManager;
 class PostcodeService
 {
     /**
+     * @var Connection
+     */
+    private $connection;
+    /**
      * @var EntityManager
      */
     private $entityManager;
@@ -29,14 +35,54 @@ class PostcodeService
     private $repository;
 
     /**
+     * @param Connection    $connection
      * @param EntityManager $entityManager
      * @param               $class
      */
-    public function __construct(EntityManager $entityManager, $class)
+    public function __construct(Connection $connection, EntityManager $entityManager, $class)
     {
         $this->entityManager = $entityManager;
         $this->repository = $entityManager->getRepository($class);
+        $this->connection = $connection;
     }
+
+    /**
+     * @param $postcode
+     * @return Postcode|null
+     */
+    public function findPostcode($postcode)
+    {
+        if (!($postcode instanceof Postcode)) {
+            $postcode = new Postcode($postcode);
+        }
+
+        if (!$postcode || !$postcode->getPostcode()) return null;
+
+        //todo join postcode_outward for town
+        $stmt = $this->connection->prepare(
+            "
+            SELECT
+            *
+            FROM postcodes
+            WHERE postcode = :postcode
+            LIMIT 1
+            ");
+        $stmt->execute(array(
+            'postcode' => $postcode->getPostcode()
+        ));
+
+        $row = $stmt->fetch(\PDO::FETCH_OBJ);
+
+        if ($row) {
+            $postcode->setLatitude($row->latitude);
+            $postcode->setLongitude($row->longitude);
+            return $postcode;
+        }
+
+        return null;
+
+    }
+
 
     /**
      * @param $name
