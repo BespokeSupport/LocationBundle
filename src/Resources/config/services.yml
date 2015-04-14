@@ -10,6 +10,6 @@ services:
     tags:
       - { name: bs.location.postcode }
     arguments:
-      - @doctrine.dbal.location_connection
       - @doctrine.orm.entity_manager
-      - %bs.location.class.entity.outward%
+      - ?@doctrine.dbal.location_connection
+

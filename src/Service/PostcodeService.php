@@ -39,11 +39,11 @@ class PostcodeService
      * @param EntityManager $entityManager
      * @param               $class
      */
-    public function __construct(Connection $connection, EntityManager $entityManager, $class)
+    public function __construct(EntityManager $entityManager, Connection $connection = null)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $entityManager->getRepository($class);
-        $this->connection = $connection;
+        $this->repository = $entityManager->getRepository('BespokeSupport\LocationBundle\Entity\PostcodeArea');
+        $this->connection = ($connection)?:$entityManager->getConnection();
     }
 
     /**
