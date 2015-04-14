@@ -11,5 +11,5 @@ services:
       - { name: bs.location.postcode }
     arguments:
       - @doctrine.orm.entity_manager
-      - ?@doctrine.dbal.location_connection
+      - @?doctrine.dbal.location_connection
 
