@@ -50,16 +50,21 @@ class PostcodeRepository extends EntityRepository
      */
     public function findArea($area)
     {
+        if (is_array($area)) $area = $area[0];
         $this->_entityName = 'BespokeSupport\LocationBundle\Entity\PostcodeArea';
         return $this->findOneBy(['postcodeArea' => $area]);
     }
 
     /**
      * @param $outward
-     * @return null|PostcodeOutward
+     * @return PostcodeOutward|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @internal param PostcodeOutward $postcodeOutward
      */
     public function findOutward($outward)
     {
+        if (is_array($outward)) $outward = $outward[0];
+
         $this->_entityName = 'BespokeSupport\LocationBundle\Entity\PostcodeOutward';
 
         $queryBuilder = $this->createQueryBuilder('o');
@@ -70,7 +75,9 @@ class PostcodeRepository extends EntityRepository
 
         $q = $queryBuilder->getQuery();
 
-        return $q->getOneOrNullResult();
+        $postcodeOutward = $q->getOneOrNullResult();
+
+        return $postcodeOutward;
     }
 
 

@@ -76,7 +76,7 @@ class PostcodeOutward
     /**
      * @var string
      *
-     * @ORM\Column(name="postcode_outward", type="string", length=4, unique=true)
+     * @ORM\Column(name="postcode_outward", type="string", length=4, unique=false)
      * @ORM\Id
      */
     protected $postcodeOutward;

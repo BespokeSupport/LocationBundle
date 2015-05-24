@@ -3,6 +3,8 @@
 namespace BespokeSupport\LocationBundle\Service;
 
 use BespokeSupport\Location\Postcode;
+use BespokeSupport\LocationBundle\Entity\PostcodeArea;
+use BespokeSupport\LocationBundle\Entity\PostcodeOutward;
 use Doctrine\DBAL\Driver\Connection;
 use Doctrine\ORM\EntityManager;
 
@@ -37,11 +39,11 @@ class PostcodeService
     /**
      * @param Connection    $connection
      * @param EntityManager $entityManager
-     * @param               $class
      */
     public function __construct(EntityManager $entityManager, Connection $connection = null)
     {
         $this->entityManager = $entityManager;
+
         $this->repository = $entityManager->getRepository('BespokeSupport\LocationBundle\Entity\PostcodeArea');
         $this->connection = ($connection)?:$entityManager->getConnection();
     }
@@ -82,6 +84,49 @@ class PostcodeService
         return null;
 
     }
+
+//    public function findOutwardEntity($postcode)
+//    {
+//        if (!($postcode instanceof Postcode)) {
+//            $postcode = new Postcode($postcode);
+//        }
+//
+//        if (!$postcode || !$postcode->getPostcodeOutward()) return null;
+//
+//
+//        //todo join postcode_outward for town
+//        $stmt = $this->connection->prepare(
+//            "
+//            SELECT
+//            *
+//            FROM postcode_outwards
+//            WHERE postcode_outward = :postcode_outward
+//            LIMIT 1
+//            ");
+//        $stmt->execute(array(
+//            'postcode_outward' => $postcode->getPostcodeOutward()
+//        ));
+//
+//        $row = $stmt->fetch(\PDO::FETCH_OBJ);
+//
+//        if ($row) {
+//            $area = new PostcodeArea();
+//            $area->setPostcodeArea($row->postcode_area);
+//            $outward = new PostcodeOutward();
+//            $outward->setPostcodeOutward($row->postcode_outward);
+//            $outward->setPostcodeArea($area);
+//            $outward->setOutwardPart($row->outward_part);
+//            $outward->setLatitude($row->latitude);
+//            $outward->setLongitude($row->longitude);
+//
+//            //todo town etc. core?
+//
+//            return $outward;
+//        }
+//
+//        return null;
+//    }
+
 
 
     /**
