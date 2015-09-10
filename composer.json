@@ -15,7 +15,8 @@
     }
   },
   "require": {
-    "bespoke-support/location" : "@dev",
+    "bespoke-support/postcode-importer" : "*",
+    "bespoke-support/location" : "*",
     "creof/doctrine2-spatial": "~0.0.1"
   }
 }
