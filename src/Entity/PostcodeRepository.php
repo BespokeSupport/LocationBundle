@@ -80,6 +80,28 @@ class PostcodeRepository extends EntityRepository
         return $postcodeOutward;
     }
 
+    /**
+     * @param $area
+     * @return PostcodeOutward[]
+     */
+    public function findOutwardsForArea($area)
+    {
+        $this->_entityName = 'BespokeSupport\LocationBundle\Entity\PostcodeOutward';
+
+        $queryBuilder = $this->createQueryBuilder('o');
+
+        $queryBuilder->where('o.postcodeArea = :outward');
+
+        $queryBuilder->setParameter('area', $area);
+
+        $queryBuilder->orderBy('o.outwardPart', 'ASC');
+
+        $q = $queryBuilder->getQuery();
+
+        $outwards = $q->getResult();
+
+        return $outwards;
+    }
 
     /**
      * @return PostcodeArea[]

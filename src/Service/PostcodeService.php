@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
  * @package BespokeSupport\LocationBundle\Service
  * @method findArea($area)
  * @method findOutward($outward)
+ * @method findOutwardsForArea($area)
  * @method findAllAreas()
  * @method findAllOutwards()
  * @method areaMappedArray()
