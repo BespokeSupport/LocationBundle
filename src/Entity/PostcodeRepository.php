@@ -90,7 +90,7 @@ class PostcodeRepository extends EntityRepository
 
         $queryBuilder = $this->createQueryBuilder('o');
 
-        $queryBuilder->where('o.postcodeArea = :outward');
+        $queryBuilder->where('o.postcodeArea = :area');
 
         $queryBuilder->setParameter('area', $area);
 
@@ -122,7 +122,6 @@ class PostcodeRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('postcodeOutward');
         return $queryBuilder->getQuery()->getResult();
     }
-
 
     /**
      * @param PostcodeArea $entity
