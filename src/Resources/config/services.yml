@@ -10,5 +10,5 @@ services:
     tags:
       - { name: bs.location.postcode }
     arguments:
-      - @doctrine.orm.entity_manager
+      - "@doctrine.orm.entity_manager"
 
