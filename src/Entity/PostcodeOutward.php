@@ -36,12 +36,6 @@ class PostcodeOutward
      */
     protected $countryString;
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="eastings", type="integer", options={"unsigned"=true})
-     */
-    protected $eastings;
-    /**
      * @var string
      *
      * @ORM\Column(name="latitude", type="decimal", precision=18, scale=12)
@@ -54,12 +48,6 @@ class PostcodeOutward
      * @ORM\Column(name="longitude", type="decimal", precision=18, scale=12)
      */
     protected $longitude;
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="northings", type="integer", options={"unsigned"=true})
-     */
-    protected $northings;
     /**
      * @var string
      *
@@ -146,29 +134,6 @@ class PostcodeOutward
     }
 
     /**
-     * Get eastings
-     *
-     * @return integer
-     */
-    public function getEastings()
-    {
-        return $this->eastings;
-    }
-
-    /**
-     * Set eastings
-     *
-     * @param integer $eastings
-     * @return PostcodeOutward
-     */
-    public function setEastings($eastings)
-    {
-        $this->eastings = $eastings;
-
-        return $this;
-    }
-
-    /**
      * Get latitude
      *
      * @return string
@@ -210,29 +175,6 @@ class PostcodeOutward
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get northings
-     *
-     * @return integer
-     */
-    public function getNorthings()
-    {
-        return $this->northings;
-    }
-
-    /**
-     * Set northings
-     *
-     * @param integer $northings
-     * @return PostcodeOutward
-     */
-    public function setNorthings($northings)
-    {
-        $this->northings = $northings;
 
         return $this;
     }
