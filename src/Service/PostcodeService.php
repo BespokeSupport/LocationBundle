@@ -53,6 +53,40 @@ class PostcodeService
      * @param $postcode
      * @return Postcode|null
      */
+    public function addGeo($postcode)
+    {
+        if (!($postcode instanceof Postcode)) {
+            $postcode = Postcode::create($postcode);
+        }
+
+        if (!$postcode) {
+            return null;
+        }
+
+        $geo = $this->connection->fetchAssoc("SELECT latitude,longitude,'postcode' as accuracy FROM postcodes p WHERE p.postcode = :postcode LIMIT 1", [
+            'postcode' => $postcode->getPostcode(),
+        ]);
+
+        if (!$geo) {
+            $geo = $this->connection->fetchAssoc("SELECT latitude,longitude,'outward' as accuracy FROM postcode_outwards WHERE postcode_outward=:outward LIMIT 1", [
+                'outward' => $postcode->getPostcodeOutward(),
+            ]);
+        }
+
+        $lat = $geo['latitude'] ?? null;
+        $lng = $geo['longitude'] ?? null;
+        $acc = $geo['accuracy'] ?? null;
+
+        $postcode->setLatitude($lat);
+        $postcode->setLongitude($lng);
+
+        return $postcode;
+    }
+
+    /**
+     * @param $postcode
+     * @return Postcode|null
+     */
     public function findPostcode($postcode)
     {
         if (!($postcode instanceof Postcode)) {
